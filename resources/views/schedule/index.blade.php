@@ -46,7 +46,7 @@
                 <!-- 月の切り替え部分 -->
                 <div class="month-selector">
                     <a href="#">&#9664;</a>
-                    <span>2026年10月スケジュール</span>
+                    <span>2026年7月スケジュール</span>
                     <a href="#">&#9654;</a>
                 </div>
 
