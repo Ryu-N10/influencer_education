@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+use App\Http\Controllers\ScheduleController;
+
+// 受講生用時間割画面のルート
+Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');

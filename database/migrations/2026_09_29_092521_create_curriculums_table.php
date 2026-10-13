@@ -31,11 +31,11 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
+      * @return void
      */
     public function down()
     {
         Schema::dropIfExists('curriculums');
     }
-};
+}; 
+   
