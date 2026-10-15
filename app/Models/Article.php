@@ -18,4 +18,25 @@ class Article extends Model
         'posted_date',
         'article_contents',
     ];
+
+    /**
+     * お知らせ一覧を投稿日時の降順（新しい順）で取得する
+     */
+    public function getArticleList()
+    {
+        // 投稿日時(posted_date)が新しい順に並び替えて、ページネーションで取得（今回は10件ずつ）
+        return $this->orderBy('posted_date', 'desc')->paginate(10);
+    }
+
+    /**
+     * 指定されたIDのお知らせを削除する
+     */
+    public function deleteArticleById($id)
+    {
+        $article = $this->find($id);
+        if ($article) {
+            return $article->delete();
+        }
+        return false;
+    }
 }
