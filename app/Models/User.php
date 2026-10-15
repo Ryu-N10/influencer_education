@@ -19,8 +19,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'name_kana',      
         'email',
         'password',
+        'profile_image', 
+        'grade_id',       
     ];
 
     /**
@@ -41,4 +44,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * 現在の学年（Grade）との繋がり
+     */
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class, 'grade_id');
+    }
 }
