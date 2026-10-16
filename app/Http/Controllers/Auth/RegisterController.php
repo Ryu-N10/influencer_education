@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegisterRequest;
 
 class RegisterController extends Controller
 {
@@ -20,23 +20,13 @@ class RegisterController extends Controller
     /**
      * 登録処理を実行する
      */
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        // 1. バリデーション（入力内容のチェック）
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'kana' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'same:password_confirmation'],
-        ]);
+        // 1. バリデーション済みのデータを取得する
+        $validated = $request->validated();
 
-        // 2. データベースにユーザーを保存
-        $user = User::create([
-            'name' => $validated['name'],
-            'kana' => $validated['kana'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-        ]);
+        // 2. データベース保存処理をモデルに任せる
+        $user = User::createUser($validated);
 
         // 3. 登録完了後のリダイレクト先
         return redirect()->route('schedule.index')->with('success', '会員登録が完了しました！');
