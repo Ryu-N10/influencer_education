@@ -12,21 +12,17 @@ return new class extends Migration
      * @return void
      */
     public function up()
-    {
-        Schema::create('delivery_times', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('curriculums_id')
-                  ->comment('カリキュラムID(curriculumsテーブルのidと紐づく)')
-                  ->constrained('curriculums')
-                  ->onDelete('cascade');
-
-            $table->dateTime('delivery_from')->comment('公開開始日');
-            $table->dateTime('delivery_to')->comment('公開終了日');
-            
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('delivery_times', function (Blueprint $table) {
+        $table->id();
+        $table->unsignedBigInteger('curriculum_id'); 
+        
+        
+        $table->string('start_at')->comment('開講日時');
+        
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.
