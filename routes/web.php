@@ -36,7 +36,7 @@ Route::prefix('user')->name('user.')->group(function () {
 });
 
 // ==========================================
-// ここから管理側のルートグループを追加
+// 管理側のルートグループ
 // ==========================================
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
@@ -46,8 +46,14 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     // お知らせ削除処理（画面イメージにある「削除」ボタン用）
     Route::post('/article_delete/{id}', [AdminArticleController::class, 'deleteArticle'])->name('article.delete');
 
+    // お知らせ変更画面の表示
+    Route::get('/article_edit/{id}', [AdminArticleController::class, 'showArticleEdit'])->name('show.article.edit');
+    
+    // お知らせ変更の登録（更新）処理
+    Route::post('/article_edit/{id}', [AdminArticleController::class, 'update'])->name('update.article');
+
     // 以下のルートは今回作成しませんが、画面遷移のエラーを防ぐための仮ルートです。
     // 他の担当者が作成する際に書き換えてもらってください。
-    Route::get('/article_edit/{id}', function($id){ return 'お知らせ変更画面 (ID:'.$id.')'; })->name('show.article.edit');
+    // TODO: トップ画面担当者が後で本物のコントローラーに書き換えること
     Route::get('/top', function(){ return '管理側トップ画面'; })->name('show.top');
 });
