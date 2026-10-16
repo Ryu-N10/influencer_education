@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User; // Userモデルを使う場合
-use Illuminate\Support\Facades\Hash; // パスワードをハッシュ化（暗号化）するため
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -14,8 +14,6 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        // 育成アプリの登録画面Bladeファイルのパスに合わせて指定してください
-        // 例: resources/views/auth/register.blade.php の場合
         return view('auth.register');
     }
 
@@ -29,7 +27,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'kana' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'], // password_confirmation との一致も自動チェック
+            'password' => ['required', 'string', 'min:8', 'same:password_confirmation'],
         ]);
 
         // 2. データベースにユーザーを保存
@@ -37,10 +35,10 @@ class RegisterController extends Controller
             'name' => $validated['name'],
             'kana' => $validated['kana'],
             'email' => $validated['email'],
-            'password' => Hash::make($validated['password']), // パスワードは必ずハッシュ化する
+            'password' => Hash::make($validated['password']),
         ]);
 
-        // 3. 登録完了後のリダイレクト先（例: 時間割画面やダッシュボードへ）
+        // 3. 登録完了後のリダイレクト先
         return redirect()->route('schedule.index')->with('success', '会員登録が完了しました！');
     }
 }

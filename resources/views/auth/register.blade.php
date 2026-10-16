@@ -66,6 +66,17 @@
     <div class="register-container">
         <h1 class="page-title">新規会員登録</h1>
 
+　　　　　<!-- すべてのエラーをリスト表示するコード -->
+@if ($errors->any())
+    <div style="background-color: #fee2e2; color: #b91c1c; padding: 10px; margin-bottom: 20px; border-radius: 4px;">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
         <form action="{{ route('register') }}" method="POST">
             @csrf
 
@@ -94,10 +105,15 @@
             </div>
 
             <!-- パスワード確認 -->
-            <div class="form-group">
-                <label for="password_confirmation">パスワード確認</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" required>
-            </div>
+<div class="form-group">
+    <label for="password_confirmation">パスワード確認</label>
+    <input type="password" id="password_confirmation" name="password_confirmation" required>
+</div>
+
+<!-- ▼ 'password_confirmation' に修正する -->
+@error('password_confirmation')
+    <div style="color: red; font-size: 12px; text-align: center; margin-top: 5px; width: 100%;">{{ $message }}</div>
+@enderror
 
             <!-- ▼ 登録ボタンを追加 -->
             <div style="text-align: center; margin-top: 30px;">
