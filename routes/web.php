@@ -21,3 +21,14 @@ use App\Http\Controllers\ScheduleController;
 
 // 受講生用時間割画面のルート
 Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
+
+
+// ==========================================
+// 新規会員登録用のルート
+// ==========================================
+use App\Http\Controllers\Auth\RegisterController; 
+
+// 新規会員登録画面の表示
+Route::get('/register', [RegisterController::class, 'create'])->name('register');
+// 登録処理の送信先
+Route::post('/register', [RegisterController::class, 'store']);
