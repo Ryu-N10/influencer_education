@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('profile_image', 255);
-            $table->unsignedBigInteger('grade_id');
+            $table->string('profile_image', 255)->nullable();
+            $table->unsignedBigInteger('grade_id')->constrained('grades');
             $table->rememberToken();
             $table->timestamps();
         });
