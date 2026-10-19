@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('profile_image', 255)->nullable();
-            $table->unsignedBigInteger('grade_id')->constrained('grades');
+            $table->foreignId('grade_id')->constrained('grades');
             $table->rememberToken();
             $table->timestamps();
         });
