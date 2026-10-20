@@ -52,4 +52,22 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Grade::class, 'grade_id');
     }
+
+    /**
+     * プロフィール情報を更新する処理（コントローラーから呼ばれます）
+     */
+    public function updateProfileData($name, $name_kana, $email, $profile_image_name = null)
+    {
+        $this->name = $name;
+        $this->name_kana = $name_kana;
+        $this->email = $email;
+        
+        // 画像が新しくアップロードされた場合のみ、画像名を書き換える
+        if ($profile_image_name !== null) {
+            $this->profile_image = $profile_image_name;
+        }
+        
+        // データベースに保存
+        return $this->save();
+    }
 }
