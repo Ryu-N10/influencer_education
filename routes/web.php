@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,3 +33,11 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('/register', [RegisterController::class, 'create'])->name('register');
 // 登録処理の送信先
 Route::post('/register', [RegisterController::class, 'store']);
+
+
+use App\Http\Controllers\Auth\LoginController;
+
+// ログイン画面を表示するルート
+Route::get('login', [LoginController::class, 'create'])->name('login');
+// ログイン処理を実行するルート
+Route::post('login', [LoginController::class, 'store']);
