@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User; // 強制ログインに使うため追加
+use App\Models\User;
+// ▼追加：先ほど作った警備員（フォームリクエスト）を呼び出します
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -31,24 +33,21 @@ class ProfileController extends Controller
      */
     public function showProfileForm()
     {
-        // 裏技を実行してユーザーを取得
         $user = $this->forceLoginIfNeed();
         return view('user.profile_edit', compact('user'));
     }
 
     /**
      * プロフィールを更新する
+     * ▼変更：カッコの中を (Request $request) から (ProfileUpdateRequest $request) に変えました。
+     * これだけで、この処理が始まる前に自動的に警備員がチェックを行ってくれるようになります。
      */
-    public function updateProfile(Request $request)
+    public function updateProfile(ProfileUpdateRequest $request)
     {
         $this->forceLoginIfNeed();
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'name_kana' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        // ※ここに書いてあった $request->validate([...]) のルールは、
+        // ProfileUpdateRequest の中にお引越ししたので丸ごと削除しました。
 
         $user = Auth::user();
         $imageName = null;
