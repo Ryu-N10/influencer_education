@@ -4,40 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Article; // モデルを使用する
+use App\Models\Article;
+// ▼追加：先ほど作ったお知らせ専用の警備員を呼び出します
+use App\Http\Requests\Admin\ArticleUpdateRequest;
 
 class ArticleController extends Controller
 {
-    private $articleModel;
+    private $article;
 
     public function __construct()
     {
-        // モデルを準備しておく
-        $this->articleModel = new Article();
+        $this->article = new Article();
     }
 
     /**
-     * お知らせ一覧画面を表示する
+     * お知らせ一覧画面の表示
      */
     public function showArticleList()
     {
-        // モデルにお知らせ一覧データを取得してもらう
-        $articles = $this->articleModel->getArticleList();
-
-        // 取得したデータをビューに渡す
+        $articles = $this->article->getArticleList(10);
         return view('admin.article_list', compact('articles'));
-    }
-
-    /**
-     * お知らせの削除処理
-     */
-    public function deleteArticle($id)
-    {
-        // モデルに指定したIDの削除を依頼する
-        $this->articleModel->deleteArticleById($id);
-
-        // 削除が完了したら、一覧画面に戻ってメッセージを表示する
-        return redirect()->route('admin.show.article.list')->with('success', 'お知らせを削除しました。');
     }
 
     /**
@@ -45,38 +31,44 @@ class ArticleController extends Controller
      */
     public function showArticleEdit($id)
     {
-        // URLのIDを元に、データベースからお知らせのデータを探して持ってくる
+        // URLのIDを元にお知らせのデータを取得
         $article = Article::findOrFail($id);
-
-        // 画面のファイル（ビュー）にデータを渡して表示する
         return view('admin.article_edit', compact('article'));
     }
 
     /**
      * お知らせの更新処理
+     * ▼変更：(Request $request) を (ArticleUpdateRequest $request) に変えます！
+     * これで自動的に警備員がチェックを行ってくれます。
      */
-    public function update(Request $request, $id)
+    public function update(ArticleUpdateRequest $request, $id)
     {
-        // 1. 入力されたデータが正しいかチェック（バリデーション）
-        $request->validate([
-            'posted_date' => 'required|date',
-            'title' => 'required|string|max:255',
-            'article_contents' => 'required|string',
-        ], [
-            // エラーが出たときのメッセージを日本語にする
-            'posted_date.required' => '投稿日時は必須です。',
-            'title.required' => 'タイトルは必須です。',
-            'article_contents.required' => '本文は必須です。',
-        ]);
+        // ※ここに書いてあった $request->validate([...]) のルールは、
+        // ArticleUpdateRequest に丸ごとお引越ししたので削除しました！
 
-        // 2. データベースのデータを更新する
+        // データベースのデータを更新する
         $article = Article::findOrFail($id);
         $article->posted_date = $request->posted_date;
         $article->title = $request->title;
         $article->article_contents = $request->article_contents;
         $article->save();
 
-        // 3. お知らせ一覧画面に戻り、「更新しました」というメッセージを渡す
+        // お知らせ一覧画面に戻り、メッセージを渡す
         return redirect()->route('admin.show.article.list')->with('success', 'お知らせを変更しました。');
+    }
+
+    /**
+     * お知らせの削除処理
+     */
+    public function deleteArticle($id)
+    {
+        $this->article->deleteArticleById($id);
+        return redirect()->route('admin.show.article.list')->with('success', 'お知らせを削除しました。');
+    }
+
+    // --- 仮ルート用のダミー ---
+    public function showArticleCreate()
+    {
+        return view('admin.article_create');
     }
 }
