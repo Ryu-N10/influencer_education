@@ -25,21 +25,10 @@
         <!-- バナー画像エリア -->
         <div class="banner-section">
             <div class="banner-container">
-                <a href="https://example.com/page1" target="_blank" class="banner-item active">
-                    <img src="{{ asset('images/banner1.jpg') }}" alt="バナー1">
-                </a>
-                <a href="https://example.com/page2" target="_blank" class="banner-item">
-                    <img src="{{ asset('images/banner2.jpg') }}" alt="バナー2">
-                </a>
-                <a href="https://example.com/page3" target="_blank" class="banner-item">
-                    <img src="{{ asset('images/banner3.jpg') }}" alt="バナー3">
-                </a>
-                <a href="https://example.com/page4" target="_blank" class="banner-item">
-                    <img src="{{ asset('images/banner4.jpg') }}" alt="バナー4">
-                </a>
+                <div class="banner-placeholder">バナー画像</div>
             </div>
 
-            <!-- ドットインジケーター（1つだけ正しく配置） -->
+            <!-- ドットインジケーター -->
             <div class="banner-dots">
                 <span class="dot active" data-index="0"></span>
                 <span class="dot" data-index="1"></span>
