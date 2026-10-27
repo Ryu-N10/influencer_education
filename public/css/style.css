@@ -1,0 +1,188 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+/* ヘッダー */
+.header {
+    background-color: #f27952; /* オレンジ色の背景 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background-color: #d9623d;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btn.active {
+    background-color: #2096a6; /* 時間割のターコイズブルー風の色 */
+}
+
+.logout-link {
+    color: #000; 
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* メインコンテンツ */
+.main-content {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* お知らせセクション */
+.news-section h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.news-container {
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.news-item {
+    display: flex;
+    gap: 30px;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.news-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.news-date {
+    color: #333;
+    white-space: nowrap;
+}
+
+.news-title {
+    color: #333;
+}
+
+/* バナーセクション全体の外枠 */
+.banner-section {
+    position: relative;
+    width: 100%;
+    max-width: 800px; 
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+
+/* バナーを表示するコンテナ（ここを枠線で囲む） */
+.banner-container {
+    position: relative;
+    width: 100%;
+    height: 300px;           /* バナーの高さ */
+    overflow: hidden;
+    border: 1px solid #ccc;  /* 枠線（薄いグレー） */
+    border-radius: 16px;     /* 角丸の大きさ */
+    background-color: #fff;  /* 背景色（白） */
+}
+
+/* 個別のバナーアイテム（初期は非表示） */
+.banner-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    display: none;
+}
+
+/* 表示中のバナー */
+.banner-item.active {
+    opacity: 1;
+    display: block;
+}
+
+.banner-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer; /* クリックできることが分かるようにする */
+}
+
+/* ドットインジケーター（枠の外の下側に配置） */
+.banner-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background-color: #333; /* 選択中のドットの色 */
+}
+
+/* お知らせ全体を囲む角丸ボックス */
+.news-box {
+    border: 1px solid #ccc; /* 枠線の太さと色（薄いグレー） */
+    border-radius: 12px;     /* 角丸の大きさ */
+    padding: 20px;           /* ボックスの内側の余白 */
+    background-color: #fff;  /* 背景色（白） */
+}
+
+/* ボックス内のリストのスタイル調整 */
+.news-box ul {
+    list-style: none;        /* 黒丸を消す */
+    padding: 0;
+    margin: 0;
+}
+
+.news-box li {
+    display: flex;           /* 日付とタイトルを横並びにする */
+    gap: 30px;               /* 日付とタイトルの間のスペース */
+    padding: 10px 0;         /* リストの各行の上下の隙間 */
+    font-size: 14px;
+}
+
+.news-box .date {
+    color: #333;             
+    white-space: nowrap;     /* 日付が途中で折り返されないようにする */
+}
+
+/* タイトルのリンクスタイル */
+.news-box a {
+    color: #333;
+    text-decoration: none;
+}
+
+.news-box a:hover {
+    text-decoration: underline; 
+}
