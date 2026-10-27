@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ProgressController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\ArticleController as UserArticleController;
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 
 /*
@@ -39,6 +40,9 @@ Route::prefix('user')->name('user.')->group(function () {
     
     // パスワードの更新処理
     Route::post('/password', [ProfileController::class, 'updatePassword'])->name('update.password');
+
+    // お知らせ詳細画面の表示
+    Route::get('/article/{id}', [UserArticleController::class, 'showArticle'])->name('show.article');
 });
 
 // ==========================================
