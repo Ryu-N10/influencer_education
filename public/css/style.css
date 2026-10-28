@@ -47,43 +47,6 @@ body {
     padding: 0 20px;
 }
 
-/* お知らせセクション */
-.news-section h2 {
-    font-size: 20px;
-    margin-bottom: 15px;
-}
-
-.news-container {
-    border: 1px solid #ccc;
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.news-item {
-    display: flex;
-    gap: 30px;
-    font-size: 14px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 8px;
-}
-
-.news-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.news-date {
-    color: #333;
-    white-space: nowrap;
-}
-
-.news-title {
-    color: #333;
-}
-
 /* バナーセクション全体の外枠 */
 .banner-section {
     position: relative;
@@ -93,43 +56,26 @@ body {
     margin-bottom: 40px;
 }
 
-/* バナーを表示するコンテナ（ここを枠線で囲む） */
+/* バナーの枠（プレースホルダー） */
 .banner-container {
     position: relative;
     width: 100%;
     height: 300px;           /* バナーの高さ */
-    overflow: hidden;
-    border: 1px solid #ccc;  /* 枠線（薄いグレー） */
-    border-radius: 16px;     /* 角丸の大きさ */
+    border: 1px solid #ccc;  /* 薄いグレーの枠線 */
+    border-radius: 4px;      /* 角の丸み */
     background-color: #fff;  /* 背景色（白） */
+    display: flex;
+    justify-content: center; /* 左右の中央寄せ */
+    align-items: center;     /* 上下の中央寄せ */
 }
 
-/* 個別のバナーアイテム（初期は非表示） */
-.banner-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    display: none;
+/* 「バナー画像」の文字スタイル */
+.banner-placeholder {
+    font-size: 18px;
+    color: #333;
 }
 
-/* 表示中のバナー */
-.banner-item.active {
-    opacity: 1;
-    display: block;
-}
-
-.banner-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    cursor: pointer; /* クリックできることが分かるようにする */
-}
-
-/* ドットインジケーター（枠の外の下側に配置） */
+/* ドットインジケーター */
 .banner-dots {
     display: flex;
     justify-content: center;
@@ -138,16 +84,22 @@ body {
 }
 
 .dot {
-    width: 12px;
-    height: 12px;
-    background-color: #ccc;
+    width: 10px;
+    height: 10px;
+    background-color: #b59898;
     border-radius: 50%;
+    display: inline-block;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 .dot.active {
-    background-color: #333; /* 選択中のドットの色 */
+    background-color: #8c6868;
+}
+
+/* お知らせセクション */
+.news-section h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
 }
 
 /* お知らせ全体を囲む角丸ボックス */
@@ -170,6 +122,12 @@ body {
     gap: 30px;               /* 日付とタイトルの間のスペース */
     padding: 10px 0;         /* リストの各行の上下の隙間 */
     font-size: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+.news-box li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .news-box .date {
