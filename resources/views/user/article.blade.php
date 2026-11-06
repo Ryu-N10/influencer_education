@@ -13,7 +13,9 @@
         {{-- $articleにデータが存在するか確認 --}}
         @if($article)
             <h1>{{ $article->title }}</h1>
-            <p style="color: gray;">投稿日時：{{ $article->posted_date }}</p>
+            
+            {{-- ▼修正：設計書に合わせて日付を「YYYY年MM月DD日」の形に変換する魔法（Carbon）を追加 --}}
+            <p style="color: gray;">投稿日時：{{ \Carbon\Carbon::parse($article->posted_date)->format('Y年m月d日') }}</p>
             
             <hr>
             
