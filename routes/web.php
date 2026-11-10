@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController; // ←ここに移動！
+use App\Http\Controllers\HomeController; 
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\Auth\RegisterController; 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\BannerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,17 +23,20 @@ Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.in
 // ==========================================
 // 新規会員登録用のルート
 // ==========================================
-// 新規会員登録画面の表示
 Route::get('/register', [RegisterController::class, 'create'])->name('register');
-// 登録処理の送信先
 Route::post('/register', [RegisterController::class, 'store']);
 
 
-// ログイン画面を表示するルート
+// ログイン関連のルート
 Route::get('login', [LoginController::class, 'create'])->name('login');
-// ログイン処理を実行するルート
 Route::post('login', [LoginController::class, 'store']);
 
 
 // ホーム画面へのルーティング
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+// 管理画面用ルーティング
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('banners', BannerController::class);
+});
