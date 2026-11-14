@@ -18,9 +18,9 @@
         </div>
     @endif
 
-    {{-- 新規登録ボタン (今回はルートがないためダミーの#にしています) --}}
-    <div class="mb-4">
-        <a href="#" class="btn text-white" style="background-color: #17a2b8;">
+    {{-- 新規登録ボタン --}}
+    <div class="mb-3">
+        <a href="{{ route('admin.show.article.create') }}" class="btn text-white" style="background-color: #17a2b8;">
             新規登録
         </a>
     </div>

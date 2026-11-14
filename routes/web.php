@@ -64,4 +64,23 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     // 管理側仮トップ画面
     Route::get('/top', function(){ return '管理側トップ画面'; })->name('show.top');
+
+    // ▼▼ 他メンバーが担当する画面の「仮ページ」を追加 ▼▼
+    // 授業管理（仮）
+    Route::get('/curriculum_list', function(){ 
+        return '<div style="padding: 50px; text-align: center;"><h2>ここは仮の「授業管理」画面です</h2><p style="color: gray;">※他のメンバーが後で本物に書き換えます。</p><a href="' . route('admin.show.article.list') . '" style="display:inline-block; margin-top:20px; padding:10px 20px; background:#4df0ff; color:#000; text-decoration:none; border-radius:5px;">お知らせ一覧に戻る</a></div>'; 
+    })->name('show.curriculum.list');
+
+    // バナー管理（仮）
+    Route::get('/banner_edit', function(){ 
+        return '<div style="padding: 50px; text-align: center;"><h2>ここは仮の「バナー管理」画面です</h2><p style="color: gray;">※他のメンバーが後で本物に書き換えます。</p><a href="' . route('admin.show.article.list') . '" style="display:inline-block; margin-top:20px; padding:10px 20px; background:#4df0ff; color:#000; text-decoration:none; border-radius:5px;">お知らせ一覧に戻る</a></div>'; 
+    })->name('show.banner.edit');
+
+    // ログアウト（仮）
+    Route::get('/logout', function(){ 
+        return '<div style="padding: 50px; text-align: center;"><h2>ここは仮の「ログアウト」画面です</h2><p style="color: gray;">※他のメンバーが後で本物の処理に書き換えます。</p><a href="' . route('admin.show.article.list') . '" style="display:inline-block; margin-top:20px; padding:10px 20px; background:#4df0ff; color:#000; text-decoration:none; border-radius:5px;">お知らせ一覧に戻る</a></div>'; 
+    })->name('logout');
+
+     // お知らせ新規登録（仮）
+    Route::get('/article_create', [AdminArticleController::class, 'showArticleCreate'])->name('show.article.create');
 });
