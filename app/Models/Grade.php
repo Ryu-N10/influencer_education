@@ -18,7 +18,7 @@ class Grade extends Model
     /**
      * 【ローカルスコープ】
      * 指定したユーザーの進捗情報だけを絞り込んで、カリキュラムと一緒に取得する処理
-     * コントローラーからは Grade::withUserProgress($userId) として呼び出せます。
+     * コントローラーからは Grade::withUserProgress($userId)->get(); として呼び出せます。
      */
     public function scopeWithUserProgress($query, $userId)
     {

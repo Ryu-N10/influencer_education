@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Article;
-// ▼追加：先ほど作ったお知らせ専用の警備員を呼び出します
+// お知らせ専用の警備員を呼び出します
 use App\Http\Requests\Admin\ArticleUpdateRequest;
 
 class ArticleController extends Controller
@@ -31,27 +31,24 @@ class ArticleController extends Controller
      */
     public function showArticleEdit($id)
     {
-        // URLのIDを元にお知らせのデータを取得
-        $article = Article::findOrFail($id);
+        // ▼変更：直接DBを探さず、モデル（倉庫係）に「IDから1件取ってきて」とお願いする
+        $article = $this->article->getArticleById($id);
         return view('admin.article_edit', compact('article'));
     }
 
     /**
      * お知らせの更新処理
-     * ▼変更：(Request $request) を (ArticleUpdateRequest $request) に変えます！
-     * これで自動的に警備員がチェックを行ってくれます。
      */
     public function update(ArticleUpdateRequest $request, $id)
     {
-        // ※ここに書いてあった $request->validate([...]) のルールは、
-        // ArticleUpdateRequest に丸ごとお引越ししたので削除しました！
-
-        // データベースのデータを更新する
-        $article = Article::findOrFail($id);
-        $article->posted_date = $request->posted_date;
-        $article->title = $request->title;
-        $article->article_contents = $request->article_contents;
-        $article->save();
+        // ▼変更：コントローラーに直接書いていた保存処理を消し、
+        // モデル（倉庫係）に「このデータで上書き更新して」とお願いする
+        $this->article->updateArticleData(
+            $id,
+            $request->posted_date,
+            $request->title,
+            $request->article_contents
+        );
 
         // お知らせ一覧画面に戻り、メッセージを渡す
         return redirect()->route('admin.show.article.list')->with('success', 'お知らせを変更しました。');

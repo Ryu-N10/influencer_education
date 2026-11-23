@@ -8,13 +8,20 @@ use App\Models\Article; // DBのarticlesテーブルを操作するためのモ�
 
 class ArticleController extends Controller
 {
+    private $article;
+
+    public function __construct()
+    {
+        $this->article = new Article();
+    }
+
     /**
      * ユーザー側：お知らせ詳細画面を表示する
      */
     public function showArticle($id)
     {
-        // URLから渡されたID($id)を元に、お知らせデータを1件取得する
-        $article = Article::find($id);
+        // ▼変更：直接DBを探さず、モデル（倉庫係）に「IDから1件探してきて」とお願いする
+        $article = $this->article->findArticleById($id);
 
         // resources/views/user/article.blade.php にデータを渡して画面を表示する
         return view('user.article', compact('article'));

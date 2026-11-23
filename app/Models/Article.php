@@ -39,4 +39,35 @@ class Article extends Model
         }
         return false;
     }
+
+    /**
+     * ▼追加：指定されたIDのお知らせを1件取得する（データがない場合は404エラー）
+     * ※管理側のお知らせ編集画面で使います
+     */
+    public function getArticleById($id)
+    {
+        return $this->findOrFail($id);
+    }
+
+    /**
+     * ▼追加：指定されたIDのお知らせを1件取得する（データがない場合はnullを返す）
+     * ※ユーザー側のお知らせ詳細画面で使います（「登録されていません」表示のため）
+     */
+    public function findArticleById($id)
+    {
+        return $this->find($id);
+    }
+
+    /**
+     * ▼追加：指定されたIDのお知らせ内容を更新する
+     * ※管理側のお知らせ変更処理で使います
+     */
+    public function updateArticleData($id, $posted_date, $title, $article_contents)
+    {
+        $article = $this->findOrFail($id);
+        $article->posted_date = $posted_date;
+        $article->title = $title;
+        $article->article_contents = $article_contents;
+        return $article->save();
+    }
 }
