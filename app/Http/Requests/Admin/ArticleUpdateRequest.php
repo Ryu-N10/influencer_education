@@ -7,35 +7,42 @@ use Illuminate\Foundation\Http\FormRequest;
 class ArticleUpdateRequest extends FormRequest
 {
     /**
-     * この機能を利用できる権限があるかどうかの判定
+     * このリクエスト（操作）を許可するかどうか
+     * ※必ず true にします
      */
     public function authorize()
     {
-        // 管理者なら誰でも変更できる前提なので true（許可）にします
         return true;
     }
 
     /**
-     * 入力されたデータに対するチェックルール
+     * 入力チェックのルール（バリデーションルール）
      */
     public function rules()
     {
         return [
-            'posted_date' => 'required|date',
-            'title' => 'required|string|max:255',
-            'article_contents' => 'required|string',
+            'posted_date'      => ['required', 'date'],
+            'title'            => ['required', 'max:255'],
+            'article_contents' => ['required'],
         ];
     }
 
     /**
-     * エラーが出たときの日本語メッセージ
+     * エラーが発生したときの日本語メッセージ（仕様書の検証内容と完全に一致させています）
      */
     public function messages()
     {
         return [
-            'posted_date.required' => '投稿日時は必須です。',
-            'title.required' => 'タイトルは必須です。',
-            'article_contents.required' => '本文は必須です。',
+            // 投稿日時のエラーメッセージ
+            'posted_date.required'      => '投稿日時を入力してください。',
+            'posted_date.date'          => '正しい日付形式で入力してください。',
+
+            // タイトルのエラーメッセージ
+            'title.required'            => 'タイトルを入力してください。',
+            'title.max'                 => 'タイトルは255文字以内で入力してください。',
+
+            // 本文のエラーメッセージ
+            'article_contents.required' => '本文を入力してください。',
         ];
     }
 }
