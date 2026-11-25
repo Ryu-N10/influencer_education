@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Http\Controllers\User\ProgressController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\ArticleController as UserArticleController;
@@ -25,6 +27,35 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/top', function () {
         return 'ここは仮のトップページです。本来は TopController が処理します。';
     })->name('show.top');
+
+    // ▼▼ 単体テスト用に追加した「仮ページ」3つ ▼▼
+    // 時間割（仮）
+    Route::get('/curriculum_list', function () {
+        return '<div style="padding: 50px; text-align: center;"><h2>ここは仮の「時間割（授業一覧）」画面です</h2><p style="color: gray;">※他のメンバーが後で本物に書き換えます。</p><a href="' . route('user.show.password.edit') . '" style="display:inline-block; margin-top:20px; padding:10px 20px; background:#13A3A8; color:#fff; text-decoration:none; border-radius:5px;">パスワード変更画面に戻る</a></div>';
+    })->name('show.curriculum');
+
+    // ログイン画面（仮）
+    Route::get('/login', function () {
+        return '<div style="padding: 50px; text-align: center;"><h2>ここは仮の「ログイン」画面です</h2><p style="color: gray;">現在は未ログイン状態です。</p><a href="' . route('user.test.login') . '" style="display:inline-block; margin-top:20px; padding:10px 20px; background:#F07A5A; color:#fff; text-decoration:none; border-radius:5px;">テストユーザーでログインする（開発用）</a></div>';
+    })->name('show.login');
+
+    // 開発用：ワンクリックでログインし直すためのルート
+    Route::get('/test_login', function () {
+        $user = User::first();
+        if ($user) {
+            Auth::login($user);
+        }
+        return redirect()->route('user.show.password.edit');
+    })->name('test.login');
+
+    // ログアウト処理（仮）
+    Route::get('/logout', function () {
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect()->route('user.show.login');
+    })->name('logout');
+    // ▲▲ ここまで ▲▲
     
     // 授業進捗画面
     Route::get('/progress', [ProgressController::class, 'showProgress'])->name('show.progress');

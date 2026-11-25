@@ -4,8 +4,8 @@
 @section('content')
 <div class="container mx-auto p-4 max-w-lg">
     <div class="mb-4">
-        {{-- ※本来はプロフィール設定トップ等に戻りますが、今回は仮でトップ画面に戻るようにしています --}}
-        <a href="{{ route('user.show.top') }}" class="text-blue-500 hover:underline">←戻る</a>
+        {{-- 設計書に合わせてプロフィール設定画面へ戻る --}}
+        <a href="{{ route('user.show.profile') }}" class="text-blue-500 hover:underline">←戻る</a>
     </div>
 
     <h1 class="text-2xl font-bold mb-6">パスワード変更</h1>
@@ -17,16 +17,16 @@
         </div>
     @endif
 
-    <form action="{{ route('user.update.password') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form action="{{ route('user.update.password') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" novalidate>
         @csrf
 
         {{-- 旧パスワード --}}
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="old_password">
-                現在のパスワード <span class="text-red-500">*</span>
+                旧パスワード <span class="text-red-500">*</span>
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
-                   id="old_password" name="old_password" type="password" required>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline" 
+                   id="old_password" name="old_password" type="password">
             @error('old_password')
                 <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
@@ -35,23 +35,25 @@
         {{-- 新パスワード --}}
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="new_password">
-                新しいパスワード <span class="text-red-500">*</span>
+                新パスワード <span class="text-red-500">*</span>
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
-                   id="new_password" name="new_password" type="password" required>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline" 
+                   id="new_password" name="new_password" type="password">
             @error('new_password')
                 <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
 
-        {{-- 新パスワード（確認用） --}}
+        {{-- 新パスワード確認 --}}
         <div class="mb-6">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="new_password_confirmation">
-                新しいパスワード（確認） <span class="text-red-500">*</span>
+                新パスワード確認 <span class="text-red-500">*</span>
             </label>
-            {{-- 確認用は name="new_password_confirmation" にする必要があります（Laravelのルール） --}}
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                   id="new_password_confirmation" name="new_password_confirmation" type="password" required>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline" 
+                   id="new_password_confirmation" name="new_password_confirmation" type="password">
+            @error('new_password_confirmation')
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="flex items-center justify-between">

@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-// ▼追加：先ほど作った警備員（フォームリクエスト）を呼び出します
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\PasswordUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -39,15 +39,10 @@ class ProfileController extends Controller
 
     /**
      * プロフィールを更新する
-     * ▼変更：カッコの中を (Request $request) から (ProfileUpdateRequest $request) に変えました。
-     * これだけで、この処理が始まる前に自動的に警備員がチェックを行ってくれるようになります。
      */
     public function updateProfile(ProfileUpdateRequest $request)
     {
         $this->forceLoginIfNeed();
-
-        // ※ここに書いてあった $request->validate([...]) のルールは、
-        // ProfileUpdateRequest の中にお引越ししたので丸ごと削除しました。
 
         $user = Auth::user();
         $imageName = null;
@@ -74,28 +69,32 @@ class ProfileController extends Controller
      */
     public function showPasswordFrom()
     {
-        $this->forceLoginIfNeed();
+        // ログインしていない場合はログイン画面へリダイレクト（No.18のテスト対応）
+        if (!Auth::check()) {
+            return redirect()->route('user.show.login');
+        }
+
         return view('user.password_edit');
     }
 
     /**
      * パスワードを更新する
      */
-    public function updatePassword(Request $request)
+    public function updatePassword(PasswordUpdateRequest $request)
     {
-        $this->forceLoginIfNeed();
-
-        $request->validate([
-            'old_password' => ['required', 'string', 'min:8'],
-            'new_password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        // ログインしていない場合はログイン画面へリダイレクト
+        if (!Auth::check()) {
+            return redirect()->route('user.show.login');
+        }
 
         $user = Auth::user();
 
+        // 入力された旧パスワードが現在のパスワードと一致するか確認
         if (!Hash::check($request->old_password, $user->password)) {
             return back()->withErrors(['old_password' => '現在のパスワードが正しくありません。']);
         }
 
+        // 新しいパスワードを暗号化（ハッシュ化）して保存
         $user->password = Hash::make($request->new_password);
         $user->save();
 

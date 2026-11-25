@@ -12,12 +12,12 @@
     <!-- 仮の共通ヘッダー（担当3が作成するまでの代用品） -->
     <header class="bg-[#F07A5A] text-white p-4 flex justify-between items-center shadow-md">
         <div class="flex space-x-2">
-            <a href="#" class="bg-[#13A3A8] px-5 py-2 rounded-full text-white font-bold text-sm shadow">時間割</a>
+            <a href="{{ route('user.show.curriculum') }}" class="bg-[#13A3A8] px-5 py-2 rounded-full text-white font-bold text-sm shadow">時間割</a>
             <a href="{{ route('user.show.progress') }}" class="bg-[#13A3A8] px-5 py-2 rounded-full text-white font-bold text-sm shadow">授業進捗</a>
-            <a href="#" class="bg-[#13A3A8] px-5 py-2 rounded-full text-white font-bold text-sm shadow">プロフィール設定</a>
+            <a href="{{ route('user.show.profile') }}" class="bg-[#13A3A8] px-5 py-2 rounded-full text-white font-bold text-sm shadow">プロフィール設定</a>
         </div>
         <div>
-            <a href="#" class="hover:underline font-bold text-sm">ログアウト</a>
+            <a href="{{ route('user.logout') }}" class="hover:underline font-bold text-sm">ログアウト</a>
         </div>
     </header>
 
